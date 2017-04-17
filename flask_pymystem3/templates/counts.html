@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Results</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<h1>Results</h1>
+<p>verbs in total: {{ len_v }}</p>
+<p>propotion of verbs: {{ part }}</p>
+<p>transitivity:<br>
+{% for t,n in tr.items() %}
+{{ t }} - {{ n }} <br>
+{% endfor %}</p>
+<p>aspect:<br>
+{% for a,n in asp.items() %}
+{{ a }} - {{ n }} <br>
+{% endfor %}</p>
+<p>lemmas:<br>
+{% for le,n in lem %}
+{{ le }} - {{ n }} <br>
+{% endfor %}</p>
+</body>
+</html>
