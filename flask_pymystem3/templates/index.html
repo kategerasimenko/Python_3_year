@@ -9,5 +9,22 @@
 Enter text: <br><textarea name="text"></textarea><br>
 <button type="submit">Submit</button>
 </form>
+{% if show == True %}
+<h1>Results</h1>
+<p>verbs in total: {{ len_v }}</p>
+<p>propotion of verbs: {{ part }}</p>
+<p>transitivity:<br>
+{% for t,n in tr.items() %}
+{{ t }} - {{ n }} <br>
+{% endfor %}</p>
+<p>aspect:<br>
+{% for a,n in asp.items() %}
+{{ a }} - {{ n }} <br>
+{% endfor %}</p>
+<p>lemmas:<br>
+{% for le,n in lem %}
+{{ le }} - {{ n }} <br>
+{% endfor %}</p>
+{% endif %}
 </body>
 </html>

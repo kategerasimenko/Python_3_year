@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 def find_verbs(text):
     anas = m.analyze(text)
-    verbs = [x for x in anas if 'analysis' in x and \
+    verbs = [x for x in anas if 'analysis' in x and x['analysis'] and \
              x['analysis'][0]['gr'].split('=')[0].split(',')[0] == 'V']
     return verbs, len(verbs)/len(text.split())
 
@@ -36,14 +36,16 @@ def get_aspect(verb):
 
 def get_trans_aspect(verb):
     aspect = []
+    trans = 'no transitivity value'
     after_pos = verb['analysis'][0]['gr'].split('=')[0].split(',')[1:]
+    trans_check = lambda x: x in ['пе','нп']
+    aspect_check = lambda x: x in ['сов','несов']
     if len(after_pos) == 1:
-        trans = after_pos[0]
+        if trans_check(after_pos[0]): trans = after_pos[0]
+        if aspect_check(after_pos[0]): aspect = [after_pos[0]]
     elif len(after_pos) > 1:
-        aspect = [after_pos[-2]]
-        trans = after_pos[-1]
-    else:
-        trans = 'no transitivity value'
+        if aspect_check(after_pos[-2]): aspect = [after_pos[-2]]
+        if trans_check(after_pos[-1]): trans = after_pos[-1]
     return trans, aspect
 
 
@@ -68,8 +70,6 @@ def lemmas(verbs):
 def count_all(text):
     v,part = find_verbs(text)
     tr,asp = get_info(v)
-    tr_count = Counter(tr)
-    asp_count = Counter(asp)
     lem = lemmas(v)
     return len(v),part,tr,asp,lem
 
@@ -77,22 +77,17 @@ def count_all(text):
 @app.route('/',methods=['GET','POST'])
 def index():
     if request.method == 'POST':
-        return redirect(url_for('counts',**request.form),code=307)
-    return render_template('index.html')
-
-
-@app.route('/counts',methods=['GET','POST'])
-def counts():
-    if request.method == 'POST':
         text = request.form['text']
         len_v,part,tr,asp,lem = count_all(text)
-        return render_template('counts.html',
+        return render_template('index.html',
                                len_v=len_v,
                                part=part,
                                tr=tr,
                                asp=asp,
-                               lem=lem)
-    return 'Enter the text at first'
+                               lem=lem,
+                               show=True)
+    return render_template('index.html',show=False)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
