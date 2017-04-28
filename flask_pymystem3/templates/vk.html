@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Wordforms from vk community</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<a href='/'>To the main page</a>
+<p></p>
+<form method='POST'>
+Enter community id (e.g. schooloflinguistics): <br><input type='text' name='group'></input><br>
+<button type="submit">Submit</button>
+</form>
+{% if found %}
+<h3>Top-100 wordforms</h3>
+<ul>
+{% for word,n in data %}
+<li>{{ word }} - {{ n }} occurrences</li>
+{% endfor %}
+</ul>
+{% elif data %}
+{{ data[0][0] }} - {{ data[0][1] }}
+{% endif %}
+</body>
+</html>
