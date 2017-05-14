@@ -18,14 +18,11 @@ def counts():
     if request.method == 'POST':
         text = request.form['text']
         len_v,part,tr,asp,lem = count_all(text)
-        return render_template('counts.html',
-                               len_v=len_v,
-                               part=part,
-                               tr=tr,
-                               asp=asp,
-                               lem=lem,
-                               show=True)
-    return render_template('counts.html',show=False)
+        return render_template('counts.html',len_v=len_v,part=part,tr=tr,
+                               asp=asp,lem=lem,show=True)
+
+    return render_template('counts.html',len_v=None,part=None,tr={},
+                           asp={},lem=[],show=False)
 
     
 @app.route('/vk_wordforms',methods=['GET','POST'])

@@ -3,12 +3,83 @@
 <head>
 	<title>Count verbs</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart'], 'language': 'ru'});
+      google.charts.setOnLoadCallback(drawLemChart);
+      google.charts.setOnLoadCallback(drawTransChart);
+      google.charts.setOnLoadCallback(drawAspChart);
+      function drawLemChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Лемма');
+        data.addColumn('number', 'Количество');
+        data.addRows([
+          {% for le,n in lem %}
+              ['{{ le }}', {{ n }}],
+          {% endfor %}
+        ]);
+
+        var options = {'title':'Леммы',
+                       'width':800,
+                       'height':500,
+                       'legend': { position: "none" },
+                       'hAxis': {
+                           'slantedText':true,
+                           'slantedTextAngle':90,
+                           'textStyle': {'fontSize':12}
+                           }
+                       };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('lem_chart_div'));
+        chart.draw(data, options);
+      }
+
+      function drawTransChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Переходность');
+        data.addColumn('number', 'Количество');
+        data.addRows([
+          {% for t,n in tr.items() %}
+              ['{{ t }}', {{ n }}],
+          {% endfor %}
+        ]);
+
+        var options = {'title':'Переходность',
+                       'width':400,
+                       'height':200,
+                       'legend': { position: "none" }
+                       };
+
+        var chart = new google.visualization.BarChart(document.getElementById('trans_chart_div'));
+        chart.draw(data, options);
+      }
+
+      function drawAspChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Вид');
+        data.addColumn('number', 'Количество');
+        data.addRows([
+          {% for a,n in asp.items() %}
+              ['{{ a }}', {{ n }}],
+          {% endfor %}
+        ]);
+
+        var options = {'title':'Вид',
+                       'width':400,
+                       'height':200,
+                       'legend': { position: "none" }
+                       };
+
+        var chart = new google.visualization.BarChart(document.getElementById('asp_chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
 </head>
 <body>
 <a href='/'>To the main page</a>
 <p></p>
 <form method='POST'>
-Enter text: <br><textarea name="text"></textarea><br>
+Enter text: <br><textarea name="text" rows=10 cols=70></textarea><br>
 <button type="submit">Submit</button>
 </form>
 {% if show == True %}
@@ -19,14 +90,17 @@ Enter text: <br><textarea name="text"></textarea><br>
 {% for t,n in tr.items() %}
 {{ t }} - {{ n }} <br>
 {% endfor %}</p>
+<div id="trans_chart_div"></div>
 <p>aspect:<br>
 {% for a,n in asp.items() %}
 {{ a }} - {{ n }} <br>
 {% endfor %}</p>
+<div id="asp_chart_div"></div>
 <p>lemmas:<br>
 {% for le,n in lem %}
 {{ le }} - {{ n }} <br>
 {% endfor %}</p>
+<div id="lem_chart_div"></div>
 {% endif %}
 </body>
 </html>

@@ -3,6 +3,37 @@
 <head>
 	<title>Wordforms from vk community</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart'], 'language': 'ru'});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Слово');
+        data.addColumn('number', 'Количество');
+        data.addRows([
+          {% for word,n in data %}
+              ['{{ word }}', {{ n }}],
+          {% endfor %}
+        ]);
+
+        var options = {'title':'Слова',
+                       'width':1500,
+                       'height':600,
+                       'legend': { position: "none" },
+                       'hAxis': {
+                           'slantedText':true,
+                           'slantedTextAngle':90,
+                           'textStyle': {'fontSize':12},
+                           'showTextEvery':1
+                           }
+                       };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+ 
 </head>
 <body>
 <a href='/'>To the main page</a>
@@ -13,6 +44,7 @@ Enter community id (e.g. schooloflinguistics): <br><input type='text' name='grou
 </form>
 {% if found %}
 <h3>Top-100 wordforms</h3>
+<div id="chart_div"></div>
 <ul>
 {% for word,n in data %}
 <li>{{ word }} - {{ n }} occurrences</li>
