@@ -9,7 +9,7 @@
 
 a {
     text-decoration: none;
-    color: lightblue;
+    color: #59bce3;
 }
 
 ul {
@@ -43,7 +43,7 @@ textarea:active, input[type=text]:active {
 }
 
 button {
-    background-color: lightblue;
+    background-color: #59bce3;
     color: white; 
     width: 80px;
     height: 30px;
@@ -53,7 +53,7 @@ button {
 }
 
 button:hover {
-    background-color: blue;
+    background-color: #2eaadb;
 }
 
 #words_div {
