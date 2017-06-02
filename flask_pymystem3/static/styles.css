@@ -1,0 +1,95 @@
+#main {
+    margin: 0 auto;
+    padding-top: 20px;
+    width: 70%;
+    font-family: Arial;
+    font-weight: lighter;
+    background-color: white;
+}
+
+a {
+    text-decoration: none;
+    color: lightblue;
+}
+
+ul {
+    list-style: circle;
+}
+
+li {
+    margin: 5px 0;
+}
+
+h1 {
+    font-family: Calibri;
+    font-weight: lighter;
+}
+
+label {
+    font-family: Calibri;
+    font-weight: lighter;
+    font-style: italic;
+    font-size: 23px;
+    padding: 10px 0;
+    display: block;
+}
+
+textarea, input[type=text] {
+    margin: 10px 0;
+}
+
+textarea:active, input[type=text]:active {
+    outline: none;
+}
+
+button {
+    background-color: lightblue;
+    color: white; 
+    width: 80px;
+    height: 30px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: blue;
+}
+
+#words_div {
+    position: relative;
+    left: -30%;
+}
+
+.words {
+    float: left;
+    padding-right: 50px;
+}
+
+#message {
+    padding: 15px 0;
+}
+
+*:focus {
+    outline: none;
+}
+
+#meme {
+    width: 400px;
+    height: auto;
+    opacity: 0;
+}
+
+#meme:hover {
+    opacity: 1;
+}
+
+#meme_div {
+    width: 400px;
+    margin-top: 40px;
+    box-shadow: -1px -1px 0 #efefef;
+}
+
+#meme_div:hover {
+    box-shadow: none;
+}

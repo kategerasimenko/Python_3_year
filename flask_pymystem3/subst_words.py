@@ -29,10 +29,9 @@ def create_pos():
 #create_pos()
 
 def inflect_random(word,d):
-    not_inflecting = {'anim','inan','ANim'}
     not_changing = {'PREP','CONJ','PRCL'}
     ana_needed = p.parse(word)[0].tag
-    new_gr = frozenset([x for x in ana_needed.grammemes if x not in not_inflecting])
+    new_gr = ana_needed.grammemes
     new_word = None
     iteration = 0
     if ana_needed.POS not in not_changing:
@@ -57,8 +56,11 @@ def change_words(sentence):
     words = word_tokenize(sentence)
     result = []
     for word in words:
-        if re.search('\\w',word) is not None:
+        digit =  re.search('[0-9]',word)
+        if re.search('\\w',word) is not None and digit is None:
             result.append(' '+inflect_random(word,d))
+        elif digit is not None:
+            result.append(' '+word)
         else:
             result.append(word)
     return ''.join(result).strip()

@@ -3,6 +3,7 @@
 <head>
 	<title>Wordforms from vk community</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href='static/styles.css'>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart'], 'language': 'ru'});
@@ -29,13 +30,14 @@
                            }
                        };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('words_div'));
         chart.draw(data, options);
       }
     </script>
  
 </head>
 <body>
+<div id="main">
 <a href='/'>To the main page</a>
 <p></p>
 <form method='POST'>
@@ -44,14 +46,20 @@ Enter community id (e.g. schooloflinguistics): <br><input type='text' name='grou
 </form>
 {% if found %}
 <h3>Top-100 wordforms</h3>
-<div id="chart_div"></div>
-<ul>
-{% for word,n in data %}
+<div id="words_div"></div>
+<ul class="words">
+{% for word,n in data[:((data|length / 2)|int)] %}
+<li>{{ word }} - {{ n }} occurrences</li>
+{% endfor %}
+</ul>
+<ul class="words">
+{% for word,n in data[((data|length / 2)|int):] %}
 <li>{{ word }} - {{ n }} occurrences</li>
 {% endfor %}
 </ul>
 {% elif data %}
-{{ data[0][0] }} - {{ data[0][1] }}
+<div id="message">{{ data[0][0] }} - {{ data[0][1] }}</div>
 {% endif %}
+</div>
 </body>
 </html>

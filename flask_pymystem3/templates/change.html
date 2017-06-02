@@ -3,14 +3,17 @@
 <head>
 	<title>Change words in a sentence</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href='static/styles.css'>
 </head>
 <body>
+<div id="main">
 <a href='/'>To the main page</a>
 <p></p>
 <form method='POST'>
-Enter text: <br><textarea name='text'>{{ text }}</textarea><br>
+Enter text: <br><textarea name='text' rows=10 cols=70>{{ text }}</textarea><br>
 <button type="submit">Submit</button>
 </form>
 <p>{{ answer }}</p>
+</div>
 </body>
 </html>
